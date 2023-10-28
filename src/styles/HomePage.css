@@ -1,0 +1,19 @@
+.homepage-container{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.navbar{
+  display: flex;
+  flex-direction: column;
+}
+
+.list-group{
+  display: flex;
+}
+
+.wiki-subtitle{
+  padding: 10px;
+  margin-bottom: 12px;
+}
