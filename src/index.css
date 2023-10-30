@@ -1,7 +1,27 @@
-.fixed-header{
-  background-color: darkslateblue;
+body {
+  padding: 0;
+  margin: 0;
+}
+/* .bar a {
+  text-decoration: none;
   color: white;
-  height: 80px;
-  padding: 10px;
-  display: flex;
+} */
+.bar {
+  padding: 0;
+  background-color: purple;
+  padding: 20px;
+}
+.navbar {
+  text-decoration: none;
+  padding-left: 80px;
+  font-size: 28px;
+}
+.flag {
+  width: 35px;
+  padding-right: 15px;
+}
+.container {
+}
+.countries {
+  margin-left: 45%;
 }

@@ -1,9 +1,12 @@
+import { NavLink, Link } from "react-router-dom";
 function Navbar() {
   return (
-      <nav>
-        <p> Wiki Countries </p>
-      </nav>
-  )
+    <div className="bar">
+      <NavLink className="navbar navbar-light text-light bg-purple " to={"/"}>
+        WikiCountries
+      </NavLink>
+    </div>
+  );
 }
 
 export default Navbar;

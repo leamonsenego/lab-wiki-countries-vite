@@ -1,46 +1,39 @@
-import '/src/styles/HomePage.css'
-import {useEffect, useState} from "react";
 import axios, { Axios } from "axios";
-import { Link } from "react-router-dom";
-
-
-
+import React, { useState, useEffect } from "react";
+import { NavLink, Link } from "react-router-dom";
 function HomePage() {
-
-  const [country, setCountry] = useState([])
-
+  const [countries, setCountries] = useState([]);
 
   useEffect(() => {
-    axios.get(`https://ih-countries-api.herokuapp.com/countries`)
-      .then(response => {setCountry(response.data)})
-      .catch(error => {console.error('There was an error!', error)})
-  }, [])
+    axios
+      .get("https://ih-countries-api.herokuapp.com/countries")
+      .then((response) => {
+        setCountries(response.data);
+        console.log(countries);
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+      });
+  }, []);
 
-  console.log(country)
-
-
-  return(
-    <div className={"homepage-container"}>
-      <nav className={"navbar"}>
-      <h1 className={"wiki-subtitle"}> WikiCountries: Your Guide to the World. </h1>
-
-        <div className="list-group">
-
-          {
-            country.map((country) => {
-              return (
-                <Link to={`/${country.alpha3Code}`} key={country._id}>
-                  <p> {country.name.common} </p>
-                <img src={`https://flagpedia.net/data/flags/icon/72x54/${country.alpha2Code.toLowerCase()}.png`} alt="" />
-                </Link>
-
-              )
-            })
-          }
-          </div>
-      </nav>
+  return (
+    <div>
+      <h1>Countries</h1>
+      <ul className="container ">
+        {countries.map((country) => (
+          <li className="d-flex flex-col justify-content-left countries">
+            <Link to={`/${country.alpha3Code}`} key={country._id}>
+              <img
+                className="flag"
+                src={`https://flagpedia.net/data/flags/icon/72x54/${country.alpha2Code.toLowerCase()}.png`}
+              />
+              {country.name.common}
+            </Link>
+          </li>
+        ))}
+      </ul>
     </div>
-  )
+  );
 }
 
 export default HomePage;

@@ -1,65 +1,48 @@
-import "/src/styles/CountryDetails.css"
-import { useParams, Link } from 'react-router-dom'
-import { useEffect, useState } from "react"
-import axios from "axios";
-
+import { useState, useEffect } from "react";
+import { useParams, Link } from "react-router-dom";
+import axios, { Axios } from "axios";
 
 function CountryDetails() {
-  const {countryId} = useParams()
-  const [countryDetails, setCountryDetails] = useState("")
+  const [countryDetails, setCountryDetails] = useState(null);
+  const { countryId } = useParams();
+  //   console.log(countryId);
 
   useEffect(() => {
-    axios.get(`https://ih-countries-api.herokuapp.com/countries/${countryId}`)
-      .then(response => {setCountryDetails(response.data)})
-      .catch(error => {console.error('There was an error!', error)})
-  }, [])
-
-  console.log(countryDetails)
-
-
+    axios
+      .get(`https://ih-countries-api.herokuapp.com/countries/${countryId}`)
+      .then((response) => {
+        setCountryDetails(response.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+      });
+  }, [countryDetails]);
+  console.log(countryDetails);
   if (!countryDetails) {
-    return (<div> Loading... </div>)
+    return <p> Loading...</p>;
   } else {
-
     return (
       <div>
-        <h1 className={"wiki-subtitle"}> Country Details</h1>
-        <table className="table">
-          <thead></thead>
-          <tbody>
-          <tr>
-            <td>Name</td>
-            <td>{countryDetails.name.common}</td>
-          </tr>
-          <tr>
-            <td>Capital</td>
-            <td>{countryDetails.capital}</td>
-          </tr>
-          <tr>
-            <td>Area</td>
-            <td>
-              {countryDetails.area} km
-              <sup>2</sup>
-            </td>
-          </tr>
-          <tr>
-            <td>Borders</td>
-            <td>
-              {countryDetails.borders.map(eachBorder => {
-                return (
-                  <p key={countryDetails.alpha3Code}>
-                    <Link to={`/${countryDetails.alpha3Code}`}>{eachBorder}</Link>
-                  </p>
-                )
-              })}
-            </td>
-          </tr>
-          </tbody>
-        </table>
+        <div>
+          <p>Name: {countryDetails.name.common}</p>
+          <p> Capital: {countryDetails.capital}</p>
+          <img
+            className="flag"
+            src={`https://flagpedia.net/data/flags/icon/72x54/${countryDetails.alpha2Code.toLowerCase()}.png`}
+          />
+          <p>
+            Borders:
+            {countryDetails.borders.map((bordering) => (
+              <Link to={`/${bordering}`}>
+                <p>{bordering}</p>
+              </Link>
+            ))}
+          </p>
+          <p>Area: {countryDetails.area}</p>
+        </div>
       </div>
-    )
+    );
   }
 }
-
 
 export default CountryDetails;
